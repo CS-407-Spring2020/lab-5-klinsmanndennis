@@ -7,10 +7,10 @@ public class Note {
     private String content;
 
     public Note(String date, String username, String title, String content) {
-        this.date = date;
-        this.username = username;
         this.title = title;
         this.content = content;
+        this.date = date;
+        this.username = username;
     }
 
     public String getDate() {

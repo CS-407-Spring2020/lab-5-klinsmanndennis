@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Main3Activity extends AppCompatActivity {
-    int noteid = -1;
+    int idnote = -1;
     EditText et;
 
     @Override
@@ -24,9 +24,9 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         et = (EditText) findViewById(R.id.noteField);
         Intent intent = getIntent();
-        noteid = intent.getIntExtra("noteid", -1);
-        if (noteid != -1) {
-            Note note = Main2Activity.notes.get(noteid);
+        idnote = intent.getIntExtra("noteid", -1);
+        if (idnote != -1) {
+            Note note = Main2Activity.notes.get(idnote);
             String noteContent = note.getContent();
             et.setText(noteContent);
         }
@@ -39,17 +39,17 @@ public class Main3Activity extends AppCompatActivity {
         SQLiteDatabase sqlite = context.openOrCreateDatabase("notes", Context.MODE_PRIVATE, null);
         DBHelper dbHelper = new DBHelper(sqlite);
         SharedPreferences sp = getSharedPreferences("c.sakshi.lab5", Context.MODE_PRIVATE);
-        String uname = sp.getString("username", "");
+        String user = sp.getString("username", "");
         String title;
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String date = dateFormat.format(new Date());
 
-        if (noteid == -1) {
-            title = "NOTE_" + (Main2Activity.notes.size() + 1);
-            dbHelper.saveNotes(uname, title, content, date);
+        if (idnote != -1) {
+            title = "NOTE_" + (idnote + 1);
+            dbHelper.updateNote(title, date, content, user);
         } else {
-            title = "NOTE_" + (noteid + 1);
-            dbHelper.updateNote(title, date, content, uname);
+            title = "NOTE_" + (Main2Activity.notes.size() + 1);
+            dbHelper.saveNotes(user, title, content, date);
         }
 
         Intent intent = new Intent(this, Main2Activity.class);

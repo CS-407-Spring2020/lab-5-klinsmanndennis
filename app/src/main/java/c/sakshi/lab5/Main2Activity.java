@@ -28,14 +28,14 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        TextView tv;
-        tv = (TextView) findViewById(R.id.welcomeTag);
+        TextView textview;
+        textview = (TextView) findViewById(R.id.welcomeTag);
         SharedPreferences sp = getSharedPreferences("c.sakshi.lab5", Context.MODE_PRIVATE);
         String uname = sp.getString("username", "");
-        tv.setText("Welcome " + uname);
+        textview.setText("Welcome " + uname);
         Context context = getApplicationContext();
-        SQLiteDatabase sqlite = context.openOrCreateDatabase("notes", Context.MODE_PRIVATE, null);
-        DBHelper dbHelper = new DBHelper(sqlite);
+        SQLiteDatabase db = context.openOrCreateDatabase("notes", Context.MODE_PRIVATE, null);
+        DBHelper dbHelper = new DBHelper(db);
         notes = dbHelper.readNotes(uname);
         ArrayList<String> displayNotes = new ArrayList<>();
         for (Note note : notes) {
